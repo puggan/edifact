@@ -127,12 +127,10 @@ class Encoder
                     $iValue = \array_pop($iValue);
                 }
 
-                if (\is_array($iValue)) {
-                    foreach ($iValue as &$temp) {
-                        $temp = $this->escapeValue($temp);
-                    }
-                    unset($temp);
+                foreach ($iValue as &$temp) {
+                    $temp = $this->escapeValue($temp);
                 }
+                unset($temp);
 
                 $elm = \implode($this->sepComp, $iValue);
             } else {
