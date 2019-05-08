@@ -25,8 +25,8 @@ class Analyser
         $messageXml = new \SimpleXMLIterator($messageXmlString);
         unset($messageXmlString);
         $message = [
-            "defaults" => $this->readMessageDefaults($messageXml),
-            "segments" => $this->readXmlNodes($messageXml),
+            'defaults' => $this->readMessageDefaults($messageXml),
+            'segments' => $this->readXmlNodes($messageXml),
         ];
         unset($messageXml);
 
@@ -66,15 +66,15 @@ class Analyser
     {
         $arrayElements = [];
         foreach ($element as $name => $node) {
-            if ($name === "defaults") {
+            if ($name === 'defaults') {
                 continue;
             }
             $arrayElement = [];
-            $arrayElement["type"] = $name;
-            $arrayElement["attributes"] = $this->readAttributesArray($node);
+            $arrayElement['type'] = $name;
+            $arrayElement['attributes'] = $this->readAttributesArray($node);
             $details = $this->readXmlNodes($node);
             if (!empty($details)) {
-                $arrayElement["details"] = $details;
+                $arrayElement['details'] = $details;
             }
             $arrayElements[] = $arrayElement;
         }
@@ -147,10 +147,10 @@ class Analyser
         foreach ($xml as $segmentNode) {
             $qualifier = (string)$segmentNode->attributes()->id;
             $segment = [];
-            $segment["attributes"] = $this->readAttributesArray($segmentNode);
+            $segment['attributes'] = $this->readAttributesArray($segmentNode);
             $details = $this->readXmlNodes($segmentNode);
             if (!empty($details)) {
-                $segment["details"] = $details;
+                $segment['details'] = $details;
             }
             $this->segments[$qualifier] = $segment;
         }
@@ -187,7 +187,7 @@ class Analyser
                 $r[] = $id . ' - ' . $attributes['name'];
                 $r[] = '  (' . \wordwrap($attributes['desc'], 75, PHP_EOL . '  ') . ')';
 
-                $jsonelements = ["segmentCode" => $id];
+                $jsonelements = ['segmentCode' => $id];
                 foreach ($segment as $idx => $detail) {
                     $n = $idx - 1;
                     if ($idx == 0 || !isset($details_desc[$n])) {
@@ -254,7 +254,7 @@ class Analyser
                 $jsonsegment[$attributes['name']] = $jsonelements;
             } else {
                 $r[] = $id;
-                $jsonsegment["UnrecognisedType"] = $segment;
+                $jsonsegment['UnrecognisedType'] = $segment;
             }
             $this->jsonedi[] = $jsonsegment;
         }

@@ -179,7 +179,7 @@ class Encoder
     public function get(): string
     {
         if ($this->UNAActive) {
-            $una = "UNA" . $this->sepComp .
+            $una = 'UNA' . $this->sepComp .
                    $this->sepData .
                    $this->sepDec .
                    $this->symbRel .

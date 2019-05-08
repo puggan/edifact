@@ -56,13 +56,13 @@ class Interpreter
      * @var array
      */
     public $messageTextConf = [
-        'MISSINGREQUIREDSEGMENT'      => "Missing required segment",
-        'MISSINGREQUIREDGROUP'        => "Missing required group",
+        'MISSINGREQUIREDSEGMENT'      => 'Missing required segment',
+        'MISSINGREQUIREDGROUP'        => 'Missing required group',
         'NOTCONFORMANT'               => "It looks like that this message isn't conformant to the mapping provided. (Not all segments were added)",
-        'TOOMANYELEMENTS_COMPOSITE'   => "This composite data element has more elements than expected",
-        'TOOMANYELEMENTS'             => "This segment has more data elements than expected",
-        'MISSINGINTERCHANGEDELIMITER' => "The file has at least one UNB or UNZ missing",
-        'MISSINGMESSAGEDELIMITER'     => "The message has at least one UNH or UNT missing",
+        'TOOMANYELEMENTS_COMPOSITE'   => 'This composite data element has more elements than expected',
+        'TOOMANYELEMENTS'             => 'This segment has more data elements than expected',
+        'MISSINGINTERCHANGEDELIMITER' => 'The file has at least one UNB or UNZ missing',
+        'MISSINGMESSAGEDELIMITER'     => 'The message has at least one UNH or UNT missing',
     ];
 
     /**
@@ -204,11 +204,11 @@ class Interpreter
                 case 'UNZ':
                     $hasInterchangeDelimiters--;
                     if ($hasInterchangeDelimiters != 0) {
-                        $sid = ($hasInterchangeDelimiters < 0) ? "UNB" : "UNZ";
+                        $sid = ($hasInterchangeDelimiters < 0) ? 'UNB' : 'UNZ';
                         $errors[] = [
-                            "text"      => $this->messageTextConf['MISSINGINTERCHANGEDELIMITER'],
-                            "position"  => $c,
-                            "segmentId" => $sid,
+                            'text' => $this->messageTextConf['MISSINGINTERCHANGEDELIMITER'],
+                            'position' => $c,
+                            'segmentId' => $sid,
                         ];
                     }
                     $service['UNZ'] = $segment;
@@ -223,11 +223,11 @@ class Interpreter
                     $tmpmsg[] = $segment;
                     $messages[] = $tmpmsg;
                     if ($hasMessageDelimiters != 0) {
-                        $sid = ($hasMessageDelimiters < 0) ? "UNH" : "UNT";
+                        $sid = ($hasMessageDelimiters < 0) ? 'UNH' : 'UNT';
                         $errors[] = [
-                            "text"      => $this->messageTextConf['MISSINGMESSAGEDELIMITER'],
-                            "position"  => $c,
-                            "segmentId" => $sid,
+                            'text' => $this->messageTextConf['MISSINGMESSAGEDELIMITER'],
+                            'position' => $c,
+                            'segmentId' => $sid,
                         ];
                     }
                     break;
@@ -238,20 +238,20 @@ class Interpreter
         }
 
         if ($hasInterchangeDelimiters != 0) {
-            $sid = ($hasInterchangeDelimiters < 0) ? "UNB" : "UNZ";
+            $sid = ($hasInterchangeDelimiters < 0) ? 'UNB' : 'UNZ';
             $errors[] = [
-                "text"      => $this->messageTextConf['MISSINGINTERCHANGEDELIMITER'],
-                "position"  => $c ?? '',
-                "segmentId" => $sid,
+                'text' => $this->messageTextConf['MISSINGINTERCHANGEDELIMITER'],
+                'position' => $c ?? '',
+                'segmentId' => $sid,
             ];
         }
 
         if ($hasMessageDelimiters != 0) {
-            $sid = ($hasMessageDelimiters < 0) ? "UNH" : "UNT";
+            $sid = ($hasMessageDelimiters < 0) ? 'UNH' : 'UNT';
             $errors[] = [
-                "text"      => $this->messageTextConf['MISSINGMESSAGEDELIMITER'],
-                "position"  => $c ?? '',
-                "segmentId" => $sid,
+                'text' => $this->messageTextConf['MISSINGMESSAGEDELIMITER'],
+                'position' => $c ?? '',
+                'segmentId' => $sid,
             ];
         }
 
@@ -276,16 +276,16 @@ class Interpreter
         $segmentIdx = 0;
 
         foreach ($xml->children() as $elm) {
-            if ($elm->getName() === "group") {
+            if ($elm->getName() === 'group') {
                 $this->processXmlGroup($elm, $message, $segmentIdx, $groupedEdi, $errors);
-            } elseif ($elm->getName() === "segment") {
+            } elseif ($elm->getName() === 'segment') {
                 $this->processXmlSegment($elm, $message, $segmentIdx, $groupedEdi, $errors);
             }
         }
 
         if ($segmentIdx != \count($message)) {
             $errors[] = [
-                "text" => $this->messageTextConf['NOTCONFORMANT'],
+                'text' => $this->messageTextConf['NOTCONFORMANT'],
             ];
         }
 
@@ -325,9 +325,9 @@ class Interpreter
                     }
 
                     $errors[] = [
-                        "text"      => $this->messageTextConf['MISSINGREQUIREDGROUP'] . " " . ($fixed ? '(patched)' : ''),
-                        "position"  => $segmentIdx,
-                        "segmentId" => $elmType,
+                        'text' => $this->messageTextConf['MISSINGREQUIREDGROUP'] . ' ' . ($fixed ? '(patched)' : ''),
+                        'position' => $segmentIdx,
+                        'segmentId' => $elmType,
                     ];
                 } else {
                     break;
@@ -335,7 +335,7 @@ class Interpreter
             }
 
             foreach ($elm->children() as $elm2) {
-                if ($elm2->getName() === "group") {
+                if ($elm2->getName() === 'group') {
                     $this->processXmlGroup($elm2, $message, $segmentIdx, $grouptemp, $errors);
                 } else {
                     $this->processXmlSegment($elm2, $message, $segmentIdx, $grouptemp, $errors);
@@ -397,9 +397,9 @@ class Interpreter
                     }
 
                     $errors[] = [
-                        "text"      => $this->messageTextConf['MISSINGREQUIREDSEGMENT'] . " " . ($fixed ? '(patched)' : ''),
-                        "position"  => $segmentIdx,
-                        "segmentId" => (string)$elm['id'],
+                        'text' => $this->messageTextConf['MISSINGREQUIREDSEGMENT'] . ' ' . ($fixed ? '(patched)' : ''),
+                        'position' => $segmentIdx,
+                        'segmentId' => (string)$elm['id'],
                     ];
                 }
 
@@ -453,7 +453,7 @@ class Interpreter
             $attributes = $xmlMap[$id]['attributes'];
             $details_desc = $xmlMap[$id]['details'];
 
-            $jsonelements = ["segmentIdx" => $segmentIdx, "segmentCode" => $id];
+            $jsonelements = ['segmentIdx' => $segmentIdx, 'segmentCode' => $id];
             foreach ($segment as $idx => $detail) {
                 $n = $idx - 1;
                 if ($idx == 0) {
@@ -462,11 +462,11 @@ class Interpreter
 
                 if (!isset($details_desc[$n])) {
                     $errors[] = [
-                        "text"      => $this->messageTextConf['TOOMANYELEMENTS'],
-                        "position"  => $segmentIdx,
-                        "segmentId" => $id,
+                        'text' => $this->messageTextConf['TOOMANYELEMENTS'],
+                        'position' => $segmentIdx,
+                        'segmentId' => $id,
                     ];
-                    $jsonelements["Extension" . $n] = $detail;
+                    $jsonelements['Extension' . $n] = $detail;
                     continue;
                 }
 
@@ -483,11 +483,11 @@ class Interpreter
                         foreach ($detail as $d_n => $d_detail) {
                             if (!isset($sub_details_desc[$d_n])) {
                                 $errors[] = [
-                                    "text"      => $this->messageTextConf['TOOMANYELEMENTS_COMPOSITE'],
-                                    "position"  => $segmentIdx . "/" . $idx,
-                                    "segmentId" => $id,
+                                    'text' => $this->messageTextConf['TOOMANYELEMENTS_COMPOSITE'],
+                                    'position' => $segmentIdx . '/' . $idx,
+                                    'segmentId' => $id,
                                 ];
-                                $jsoncomposite["CompositeExtension" . $d_n] = $d_detail;
+                                $jsoncomposite['CompositeExtension' . $d_n] = $d_detail;
 
                                 continue;
                             }
