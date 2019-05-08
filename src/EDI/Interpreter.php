@@ -98,7 +98,7 @@ class Interpreter
         }
         $this->errors = [];
 
-        $this->comparisonFunction = function ($segment, $elm) {
+        $this->comparisonFunction = static function ($segment, $elm) {
             return $segment[0] == $elm['id'];
         };
     }
