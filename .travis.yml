@@ -2,6 +2,8 @@ language: php
 
 sudo: false
 
+secure: "sFndMKQ2BD5P/tXaE+pjhwwAPjsQp2BLJeOJNIF28oCJ1BF2pQrtbfBuXAh0yr2Bc9SmIIVxacIw+YPcQLhCK7axS5VM35kVPeulNsJmpqOX0qM4fV3JfVt2/GvFJGFC4qLybqhYdagL9E5XL30dhDGe4ChwusgxDP2gcuLGmGStPwRvUHISzBNLCjhZ5BxOozU3U8by62BcnbhSlcqTFPxIq8BwJihRM6D62TRPEzAciG76SpYoqlop6bRSppENtjWIGsEAQ8snUNmkjjEHcA3uageTnxatfBKyIlgRNXjmvctZighUInAY6Qf+3PPqjbjMkwiexrYl8tvPa/2Sjd+FL2PpnQN4RniFGKWkLWKdyunKt550lX75VMIWT6sMqOtqpj/YvC/pg0qwDOJIMTm17aAeLbwJ9nvKT/BwDk4ImzfD9xf73q8p5qRkeonFFLCbKMUmR6PSQi+hGSfZI9YUk9jJqOQr0tIcVlr10y3F0+dUDy79MLJ2U3XAbwDPu1rFKaKxdf2Bkl7BvDQfV+NgoB4uo34Fh5dREirKf7QtQ2INsOjQ8KQo5cMGl8TIXWg5tn07V3miC5UYvfPk7K8/FIKvX6S1Zrd1G1sKQe8A5ZOZyHIFRkvv+9vm4XYYyboHwYMd4RFEL6Te8tWvhDUNBCdyOmJIUE0WatwVOfs="
+
 cache:
     directories:
         - $HOME/.composer/cache
@@ -20,6 +22,7 @@ matrix:
 before_script:
   - php --version
   - wget https://scrutinizer-ci.com/ocular.phar
+  - composer config github-oauth.github.com ${GITHUBTOKEN}
   - travis_retry composer self-update
   - travis_retry composer require satooshi/php-coveralls:1.0.0 --prefer-dist
   - travis_retry composer install --no-interaction --prefer-dist
