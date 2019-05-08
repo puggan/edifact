@@ -203,9 +203,7 @@ class Encoder
      */
     public function setUNA(string $chars, bool $user_call = true): bool
     {
-        if (\is_string($chars)
-            && \strlen($chars) == 6
-        ) {
+        if (\strlen($chars) === 6) {
             $this->sepComp = $chars[0];
             $this->sepData = $chars[1];
             $this->sepDec = $chars[2];
