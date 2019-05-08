@@ -109,11 +109,11 @@ class Analyser
     public function loadCodesXml(string $codesXml): array
     {
         $codesXmlString = \file_get_contents($codesXml);
-        $codesXml = new \SimpleXMLIterator($codesXmlString);
+        $codesXmlObject = new \SimpleXMLIterator($codesXmlString);
         unset($codesXmlString);
         $codes = [];
         /* @var \SimpleXmlIterator $codeCollection */
-        foreach ($codesXml as $codeCollection) {
+        foreach ($codesXmlObject as $codeCollection) {
             $id = (string)$codeCollection->attributes()->id;
             $codes[$id] = [];
             /*  @var \SimpleXmlIterator $codeNode */
