@@ -66,7 +66,7 @@ class Analyser
     {
         $arrayElements = [];
         foreach ($element as $name => $node) {
-            if ($name == "defaults") {
+            if ($name === "defaults") {
                 continue;
             }
             $arrayElement = [];

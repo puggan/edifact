@@ -97,7 +97,7 @@ class Reader
         }
 
         $r = $this->readUNHmessageNumber();
-        if (!$r && isset($this->errors[0]) && $this->errors[0] == 'Segment "UNH" is ambiguous') {
+        if (!$r && isset($this->errors[0]) && $this->errors[0] === 'Segment "UNH" is ambiguous') {
             $this->errors = [];
             $this->errors[] = 'File has multiple messages';
 
@@ -174,7 +174,7 @@ class Reader
         foreach (\preg_split("/(?<!\?)'/", $string) as &$line) {
             $line = \preg_replace('#[\x00\r\n]#', '', $line);
             $temp = $line . "'";
-            if ($temp != "'") {
+            if ($temp !== "'") {
                 yield $temp;
             }
         }
@@ -438,40 +438,40 @@ class Reader
 
         foreach ($this->parsedfile as $edi_row) {
             // search before group segment
-            if ($position == 'before_search' && $edi_row[0] == $before) {
+            if ($position === 'before_search' && $edi_row[0] == $before) {
                 $position = 'before_is';
                 continue;
             }
 
-            if ($position == 'before_search') {
+            if ($position === 'before_search') {
                 continue;
             }
 
-            if ($position == 'before_is' && $edi_row[0] == $before) {
+            if ($position === 'before_is' && $edi_row[0] == $before) {
                 continue;
             }
 
             // after before search start
-            if ($position == 'before_is' && $edi_row[0] == $start) {
+            if ($position === 'before_is' && $edi_row[0] == $start) {
                 $position = 'group_is';
                 $group[] = $edi_row;
                 continue;
             }
 
             // if after before segment no start segment, search again before segment
-            if ($position == 'before_is') {
+            if ($position === 'before_is') {
                 $position = 'before_search';
                 continue;
             }
 
             // get group element
-            if ($position == 'group_is' && $edi_row[0] != $end) {
+            if ($position === 'group_is' && $edi_row[0] != $end) {
                 $group[] = $edi_row;
                 continue;
             }
 
             // found end of group
-            if ($position == 'group_is' && $edi_row[0] == $end) {
+            if ($position === 'group_is' && $edi_row[0] == $end) {
                 $position = 'group_finish';
                 $group[] = $edi_row;
                 $groups[] = $group;
@@ -480,14 +480,14 @@ class Reader
             }
 
             // next group start
-            if ($position == 'group_finish' && $edi_row[0] == $start) {
+            if ($position === 'group_finish' && $edi_row[0] == $start) {
                 $group[] = $edi_row;
                 $position = 'group_is';
                 continue;
             }
 
             // finish
-            if ($position == 'group_finish' && $edi_row[0] == $after) {
+            if ($position === 'group_finish' && $edi_row[0] == $after) {
                 break;
             }
 
@@ -519,7 +519,7 @@ class Reader
         foreach ($this->getParsedFile() as $edi_row) {
             $segment = $edi_row[0];
             if (
-                $position == 'group_is'
+                $position === 'group_is'
                 &&
                 (
                     $segment == $start
@@ -539,7 +539,7 @@ class Reader
             }
 
             // add element to group
-            if ($position == 'group_is') {
+            if ($position === 'group_is') {
                 $group[] = $edi_row;
             }
         }

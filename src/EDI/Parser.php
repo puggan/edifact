@@ -383,7 +383,7 @@ class Parser
 
         $end = \stripslashes($this->symbEnd);
         foreach ($file as $fc => &$line) {
-            if (\trim($line) == '') {
+            if (\trim($line) === '') {
                 /* @noinspection OffsetOperationsInspection */
                 unset($file[$fc]);
             }

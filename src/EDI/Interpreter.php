@@ -276,9 +276,9 @@ class Interpreter
         $segmentIdx = 0;
 
         foreach ($xml->children() as $elm) {
-            if ($elm->getName() == "group") {
+            if ($elm->getName() === "group") {
                 $this->processXmlGroup($elm, $message, $segmentIdx, $groupedEdi, $errors);
-            } elseif ($elm->getName() == "segment") {
+            } elseif ($elm->getName() === "segment") {
                 $this->processXmlSegment($elm, $message, $segmentIdx, $groupedEdi, $errors);
             }
         }
@@ -317,7 +317,7 @@ class Interpreter
                     &&
                     isset($elm['required'])
                 ) {
-                    $elmType = $elm['id']->__toString();
+                    $elmType = (string) $elm['id'];
                     $fixed = false;
                     if (isset($this->groupTemplates[$elmType])) {
                         \array_splice($message, $segmentIdx, 0, $this->groupTemplates[$elmType]);
@@ -335,7 +335,7 @@ class Interpreter
             }
 
             foreach ($elm->children() as $elm2) {
-                if ($elm2->getName() == "group") {
+                if ($elm2->getName() === "group") {
                     $this->processXmlGroup($elm2, $message, $segmentIdx, $grouptemp, $errors);
                 } else {
                     $this->processXmlSegment($elm2, $message, $segmentIdx, $grouptemp, $errors);
@@ -351,7 +351,7 @@ class Interpreter
             return;
         }
 
-        $array[$elm['id']->__toString()] = $newGroup;
+        $array[(string) $elm['id']] = $newGroup;
     }
 
     /**
@@ -420,9 +420,9 @@ class Interpreter
     {
         if (isset($array[$jsonMessage['key']])) {
             if (
-                isset($array[$jsonMessage['key']]['segmentCode'])
-                ||
                 $jsonMessage['key'] === 'UnrecognisedType'
+                ||
+                isset($array[$jsonMessage['key']]['segmentCode'])
             ) {
                 $temp = $array[$jsonMessage['key']];
                 $array[$jsonMessage['key']] = [];
@@ -573,7 +573,7 @@ class Interpreter
      *
      * @return Arrayy
      */
-    public function getArrayy()
+    public function getArrayy() : Arrayy
     {
         return new Arrayy($this->ediGroups);
     }
@@ -603,7 +603,7 @@ class Interpreter
      *
      * @return array
      */
-    public function getServiceSegments()
+    public function getServiceSegments() : array
     {
         return $this->serviceSeg;
     }
@@ -629,7 +629,7 @@ class Interpreter
      *
      * @return Arrayy
      */
-    public function getArrayyServiceSegments()
+    public function getArrayyServiceSegments() : Arrayy
     {
         return new Arrayy($this->serviceSeg);
     }
